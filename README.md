@@ -95,3 +95,4 @@ SMALL : 0x10BBC4000
 
 # Mutex
 Every functions are protected by a global mutex to prevent data race.
+Also in this malloc size are 16 bytes aligned : `size = (size + 15) & ~15;`
