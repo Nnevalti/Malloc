@@ -5,6 +5,8 @@ This malloc works as follows :
 - If no blocks are big enough for the requested size, it searches through the already allocated heaps to find one with enough free space or request a new heap using mmap.
 - Then it appends a new block to that heap and return a pointer to the block skipping the internal header/metadata.
 
+Also in this malloc size is 16 bytes aligned : `size = (size + 15) & ~15;`
+
 # Free
 Free as is name suggest it, frees the memory. It does not neccessarly return memory to the system.
 Instead free set the free flag of a block to True so that already allocated memory can be reused later. If the previous or next blocks are also free it merges them to prevent fragmentation. If this is the last block of a heap, heap is then returned to the system with munmap unless it is the last LARGE type of heap allocated.
@@ -95,4 +97,3 @@ SMALL : 0x10BBC4000
 
 # Mutex
 Every functions are protected by a global mutex to prevent data race.
-Also in this malloc size are 16 bytes aligned : `size = (size + 15) & ~15;`
