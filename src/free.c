@@ -9,7 +9,7 @@ void search_ptr(t_heap **heap, t_block **block, void *ptr)
 		while (*block)
 		{
 			if (ptr == (void *)*block + sizeof(t_block))
-				return ;
+				return;
 			*block = (*block)->next;
 		}
 		*heap = (*heap)->next;
@@ -43,7 +43,8 @@ t_block *merge_block(t_block *block)
 
 void remove_block_if_last(t_heap *heap, t_block *block)
 {
-	if (!block->next) {
+	if (!block->next)
+	{
 		if (block->prev)
 			block->prev->next = NULL;
 		heap->free_size += block->data_size + sizeof(t_block);
@@ -73,7 +74,7 @@ void delete_heap_if_empty(t_heap *heap)
 		if (heap->next)
 			heap->next->prev = heap->prev;
 		if (is_last_preallocated_of_type(heap) && heap->type != LARGE)
-			return ;
+			return;
 		if (heap == g_heap)
 			g_heap = heap->next;
 		munmap(heap, heap->total_size);
@@ -87,10 +88,10 @@ void start_free(void *ptr)
 	t_block *merged_block = NULL;
 
 	if (!ptr)
-		return ;
+		return;
 	search_ptr(&heap, &block, ptr);
 	if (!heap || !block)
-		return ;
+		return;
 	block->free = TRUE;
 	if ((merged_block = merge_block(block)))
 		block = merged_block;

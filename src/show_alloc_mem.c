@@ -78,7 +78,8 @@ static void print_allocated_memory_hex(void)
 		i = 0;
 		print_heap_metadata(heap);
 		address = (uint8_t *)heap;
-		while (i < heap->total_size) {
+		while (i < heap->total_size)
+		{
 			print_heap_hex_line(address + i);
 			i += 16;
 		}

@@ -35,10 +35,11 @@ void ft_itoa_base(size_t n, char base, char width)
 
 void ft_memset(void *ptr, int c, size_t size)
 {
-    char *p = ptr;
-    while (size--) {
-        *p++ = c;
-    }
+	char *p = ptr;
+	while (size--)
+	{
+		*p++ = c;
+	}
 }
 
 void ft_memmove(void *dst, const void *src, size_t len)
