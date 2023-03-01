@@ -45,9 +45,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(FLAGS_LIB) -o $@ $(OBJ)
+	@echo "${_GREEN}✓ Shared library ${_BOLD}${_UNDER}$(NAME)${_END}${_GREEN} created${_END}"
 	@rm -f $(LIB_NAME)
 	@ln -s $(NAME) $(LIB_NAME)
-	@echo "${_GREEN}✓ Shared library ${_BOLD}${_UNDER}$(NAME)${_END}${_GREEN} created${_END}"
+	@echo "${_GREEN}✓ Symbolic link ${_BOLD}${_UNDER}$(LIB_NAME)${_END}${_GREEN} created${_END}"
 
 $(PATH_OBJ)/%.o: $(PATH_SRC)/%.c
 	@mkdir -p $(@D)
