@@ -33,7 +33,8 @@ void ft_itoa_base(size_t n, char base, char width)
 	write(1, &base_str[n % base], 1);
 }
 
-void ft_memset(void *ptr, int c, size_t size) {
+void ft_memset(void *ptr, int c, size_t size)
+{
     char *p = ptr;
     while (size--) {
         *p++ = c;
