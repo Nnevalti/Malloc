@@ -55,4 +55,15 @@ void *start_malloc(size_t size);
 void start_free(void *ptr);
 void ft_putstr(char *str);
 
+/**
+ * UTILS FUNCTIONS
+*/
+
+int ft_strlen(char *str);
+void ft_putstr(char *str);
+void ft_itoa_base(size_t n, char base, char width);
+void ft_memset(void *ptr, int c, size_t size);
+void ft_memmove(void *dst, const void *src, size_t len);
+
+
 #endif

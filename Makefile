@@ -10,7 +10,8 @@ PATH_SRC = src
 SRC = malloc.c \
 	 realloc.c \
 	 free.c \
-	 show_alloc_mem.c
+	 show_alloc_mem.c \
+	 utils.c
 
 OBJ = $(SRC:%.c=$(PATH_OBJ)/%.o)
 

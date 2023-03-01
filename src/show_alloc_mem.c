@@ -1,38 +1,5 @@
 #include "malloc.h"
 
-int ft_strlen(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-}
-
-// A recursive itoa_base function with uppercase letters
-void ft_itoa_base(size_t n, char base, char width)
-{
-	char *base_str;
-
-	base_str = "0123456789ABCDEFGHIJKLMNOPQRSTUIVWXYZ";
-	if (n / base)
-		ft_itoa_base(n / base, base, width - 1);
-	else
-	{
-		while (--width > 0)
-		{
-			ft_putstr("0");
-		}
-	}
-	write(1, &base_str[n % base], 1);
-}
-
 void print_heap_type(t_heap *heap)
 {
 	if (heap->type == TINY)

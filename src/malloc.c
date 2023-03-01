@@ -187,13 +187,6 @@ void *start_malloc(size_t size) {
     return BLOCK_SHIFT(ptr);
 }
 
-void ft_memset(void *ptr, int c, size_t size) {
-    char *p = ptr;
-    while (size--) {
-        *p++ = c;
-    }
-}
-
 void *malloc(size_t size) {
     void *ptr;
 
