@@ -1,5 +1,10 @@
 #include "malloc.h"
 
+/**
+ * @brief Search for a block in the heap corresponding to the pointer
+ * @param ptr The pointer to search
+ * @return void
+ **/
 t_block *search_ptr_realloc(void *ptr)
 {
 	t_heap *heap = g_heap;
@@ -19,6 +24,12 @@ t_block *search_ptr_realloc(void *ptr)
 	return (NULL);
 }
 
+/**
+ * @brief Start realloc process
+ * @param ptr The pointer to the block
+ * @param size The new size of the block
+ * @return void
+ **/
 void *start_realloc(void *ptr, size_t size)
 {
 	t_block *block;
@@ -42,6 +53,13 @@ void *start_realloc(void *ptr, size_t size)
 	return (new_ptr);
 }
 
+/**
+ * @brief Reallocate a block
+ * @param ptr The pointer to the block
+ * @param size The new size of the block
+ * @return void
+ * @note This function is thread-safe
+ **/
 void *realloc(void *ptr, size_t size)
 {
 	void *res;

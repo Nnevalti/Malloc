@@ -42,6 +42,15 @@ void ft_memset(void *ptr, int c, size_t size)
 	}
 }
 
+void ft_bzero(void *s, size_t n)
+{
+	unsigned char *ptr = s;
+	while (n--)
+	{
+		*ptr++ = 0;
+	}
+}
+
 void ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char *d;

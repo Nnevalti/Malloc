@@ -3,6 +3,10 @@
 t_heap *g_heap = NULL;
 pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
+/**
+ * @brief Get the system limit of memory
+ * @return The system limit of memory
+ **/
 static rlim_t get_system_limit(void)
 {
     struct rlimit rpl;
@@ -12,7 +16,11 @@ static rlim_t get_system_limit(void)
     return (rpl.rlim_max);
 }
 
-// function to refacto use of mmap
+/**
+ * @brief Allocate memory using mmap
+ * @param size The size to allocate
+ * @return The pointer to the allocated memory
+ **/
 void *mmap_malloc(size_t size)
 {
     void *ptr;
@@ -27,8 +35,11 @@ void *mmap_malloc(size_t size)
     return ptr;
 }
 
-// start malloc using mmap and not sbrk, and using allocation size define in ft_malloc.h
-
+/**
+ * @brief Get the heap type based on the block size
+ * @param size The size of the block
+ * @return The heap type (TINY, SMALL or LARGE)
+ **/
 t_heap_type get_heap_type(size_t size)
 {
     if (size <= (size_t)TINY_BLOCK_SIZE)
@@ -42,6 +53,12 @@ t_heap_type get_heap_type(size_t size)
     return (LARGE);
 }
 
+/**
+ * @brief Initialize a block
+ * @param t_block A pointer to the block to initialize
+ * @param size The size of the block
+ * @return void
+ **/
 void init_block(t_block *block, size_t size)
 {
     block->data_size = size;
@@ -50,7 +67,13 @@ void init_block(t_block *block, size_t size)
     block->prev = NULL;
 }
 
-// divide the block to optimize space
+/**
+ * @brief Divide a block into two blocks (optimization to prevent unused memory)
+ * @param block The block to divide
+ * @param size The size of the first block
+ * @param heap The heap containing the block
+ * @return void
+ **/
 void divide_block(t_block *block, size_t size, t_heap *heap)
 {
     t_block *new_block;
@@ -66,6 +89,12 @@ void divide_block(t_block *block, size_t size, t_heap *heap)
     heap->nb_blocks++;
 }
 
+/**
+ * @brief Searches for a free block in allocated heaps
+ * @param size The size of the block to find
+ * @param type The type of the heap
+ * @return A pointer to the block if found, NULL otherwise
+ **/
 t_block *find_block(size_t size, t_heap_type type)
 {
     t_heap *heap = g_heap;
@@ -88,6 +117,12 @@ t_block *find_block(size_t size, t_heap_type type)
     return NULL;
 }
 
+/**
+ * @brief Get the allocation size based on the heap type
+ * @param size The size of the block
+ * @param type The type of the heap
+ * @return The allocation size
+ **/
 size_t get_allocation_size(size_t size, t_heap_type type)
 {
     if (type == TINY)
@@ -101,6 +136,12 @@ size_t get_allocation_size(size_t size, t_heap_type type)
     return (sizeof(t_heap) + sizeof(t_block) + size);
 }
 
+/**
+ * @brief Find a heap with enough free space to allocate a block
+ * @param size The size of the block
+ * @param type The type of the heap
+ * @return A pointer to the heap if found, NULL otherwise
+ **/
 t_heap *find_big_enough_heap(size_t size, t_heap_type type)
 {
     t_heap *heap = g_heap;
@@ -115,15 +156,12 @@ t_heap *find_big_enough_heap(size_t size, t_heap_type type)
     return NULL;
 }
 
-void ft_bzero(void *s, size_t n)
-{
-    unsigned char *ptr = s;
-    while (n--)
-    {
-        *ptr++ = 0;
-    }
-}
-
+/**
+ * @brief Create a new heap
+ * @param size The size of the heap
+ * @param type The type of the heap
+ * @return A pointer to the newly created heap
+ **/
 t_heap *create_new_heap(size_t size, t_heap_type type)
 {
     t_heap *heap;
@@ -156,6 +194,12 @@ t_heap *create_new_heap(size_t size, t_heap_type type)
     return heap;
 }
 
+/**
+ * @brief Find or create a heap to allocate a block
+ * @param size The size of the block
+ * @param type The type of the heap
+ * @return A pointer to the heap
+ **/
 t_heap *find_or_create_heap(size_t size, t_heap_type type)
 {
     t_heap *heap;
@@ -168,6 +212,11 @@ t_heap *find_or_create_heap(size_t size, t_heap_type type)
     return heap;
 }
 
+/**
+ * @brief Get the last block of a heap
+ * @param heap The heap we want to get the last block from
+ * @return A pointer to the last block
+ **/
 t_block *get_last_block(t_heap *heap)
 {
     t_block *block;
@@ -179,6 +228,12 @@ t_block *get_last_block(t_heap *heap)
     return block;
 }
 
+/**
+ * @brief Create a new block in the provided heap
+ * @param size The size of the block
+ * @param heap The heap
+ * @return A pointer to the newly created block
+ **/
 t_block *create_block(size_t size, t_heap *heap)
 {
     t_block *last_block;
@@ -202,6 +257,11 @@ t_block *create_block(size_t size, t_heap *heap)
     return new_block;
 }
 
+/**
+ * @brief Start the malloc process
+ * @param size The size of the block to allocate
+ * @return A pointer to the newly allocated block or NULL if an error occured
+ **/
 void *start_malloc(size_t size)
 {
     t_block *ptr;
@@ -220,6 +280,12 @@ void *start_malloc(size_t size)
     return BLOCK_SHIFT(ptr);
 }
 
+/**
+ * @brief The malloc function
+ * @param size The size of the block to allocate
+ * @return A pointer to the newly allocated block
+ * @note This function is thread safe
+ **/
 void *malloc(size_t size)
 {
     void *ptr;
