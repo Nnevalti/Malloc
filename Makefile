@@ -1,18 +1,39 @@
-# This is a minimal set of ANSI/VT100 color codes
-_END=$'\x1b[0m
-_BOLD=$'\x1b[1m
-_UNDER=$'\x1b[4m
-_REV=$'\x1b[7m
+OS := $(shell uname)
+ ifeq ($(OS), Darwin)
+    # This is a minimal set of ANSI/VT100 color codes
+	_END=$'\x1b[0m
+	_BOLD=$'\x1b[1m
+	_UNDER=$'\x1b[4m
+	_REV=$'\x1b[7m
 
-# Colors
-_GREY=$'\x1b[30m
-_RED=$'\x1b[31m
-_GREEN=$'\x1b[32m
-_YELLOW=$'\x1b[33m
-_BLUE=$'\x1b[34m
-_PURPLE=$'\x1b[35m
-_CYAN=$'\x1b[36m
-_WHITE=$'\x1b[37m
+	# Colors
+	_GREY=$'\x1b[30m
+	_RED=$'\x1b[31m
+	_GREEN=$'\x1b[32m
+	_YELLOW=$'\x1b[33m
+	_BLUE=$'\x1b[34m
+	_PURPLE=$'\x1b[35m
+	_CYAN=$'\x1b[36m
+	_WHITE=$'\x1b[37m
+ else ifeq ($(OS), Linux)
+	_END=$'\033[0m
+	_BOLD=$'\033[1m
+	_UNDER=$'\033[4m
+	_REV=$'\033[7m
+
+	# Colors
+	_GREY=$'\033[30m
+	_RED=$'\033[31m
+	_GREEN=$'\033[32m
+	_YELLOW=$'\033[33m
+	_BLUE=$'\033[34m
+	_PURPLE=$'\033[35m
+	_CYAN=$'\033[36m
+	_WHITE=$'\033[37m
+ else
+        $(info Warning: unknown OS, assuming linux)
+        OS := linux
+ endif
 
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)

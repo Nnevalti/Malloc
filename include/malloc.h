@@ -6,6 +6,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <sys/mman.h>
+#include <sys/resource.h>
 
 #define HEAP_SHIFT(start) ((void *)start + sizeof(t_heap))
 #define BLOCK_SHIFT(start) ((void *)start + sizeof(t_block))

@@ -79,7 +79,7 @@ void divide_block(t_block *block, size_t size, t_heap *heap)
     t_block *new_block;
 
     new_block = (t_block *)(BLOCK_SHIFT(block) + size);
-    init_block(new_block, block->next - new_block - sizeof(t_block));
+    init_block(new_block, block->next - new_block);
     new_block->free = TRUE;
     new_block->prev = block;
     new_block->next = block->next;
@@ -173,24 +173,16 @@ t_heap *create_new_heap(size_t size, t_heap_type type)
     {
         return NULL;
     }
-    ft_bzero(heap, allocation_size);
+    ft_bzero(heap, sizeof(heap));
     heap->type = type;
-    heap->next = NULL;
-    heap->prev = NULL;
     heap->free_size = allocation_size - sizeof(t_heap);
     heap->total_size = allocation_size;
-    heap->nb_blocks = 0;
-    if (g_heap == NULL)
+    heap->next = g_heap;
+    if (heap->next)
     {
-        g_heap = heap;
+        heap->next->prev = heap;
     }
-    else
-    {
-        heap->prev = g_heap->prev;
-        heap->next = g_heap;
-        g_heap->prev = heap;
-        g_heap = heap;
-    }
+    g_heap = heap;
     return heap;
 }
 

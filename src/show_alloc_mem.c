@@ -49,9 +49,9 @@ size_t print_heap_blocks(t_block *block)
 	return (total_size);
 }
 
-void print_heap_hex_line(uint8_t *start)
+void print_heap_hex_line(u_int8_t *start)
 {
-	uint8_t i;
+	u_int8_t i;
 
 	i = 0;
 	ft_putstr("0x");
@@ -60,7 +60,7 @@ void print_heap_hex_line(uint8_t *start)
 	while (i < 16)
 	{
 		ft_putstr(" ");
-		ft_itoa_base((uint8_t)start[i], 16, 2);
+		ft_itoa_base((u_int8_t)start[i], 16, 2);
 		i++;
 	}
 	ft_putstr("\n");
@@ -70,14 +70,14 @@ static void print_allocated_memory_hex(void)
 {
 	t_heap *heap;
 	size_t i;
-	uint8_t *address;
+	u_int8_t *address;
 
 	heap = g_heap;
 	while (heap)
 	{
 		i = 0;
 		print_heap_metadata(heap);
-		address = (uint8_t *)heap;
+		address = (u_int8_t *)heap;
 		while (i < heap->total_size)
 		{
 			print_heap_hex_line(address + i);
